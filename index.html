@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -12,7 +12,7 @@
     <!-- Android Chrome -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#4A7BA7">
-    <title>TRE - Interaktives Verständnismodell</title>
+    <title>TRE - Interactive Understanding Model</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -22,12 +22,12 @@
         </div>
     </div>
 
-    <!-- Top bar mit Hamburger und Suche -->
+    <!-- Top bar with hamburger and search -->
     <div class="top-bar">
         <button class="top-bar-btn" id="menu-btn" aria-label="Menu">
             <span></span><span></span><span></span>
         </button>
-        <button class="top-bar-btn search-btn" id="search-btn" aria-label="Suche">
+        <button class="top-bar-btn search-btn" id="search-btn" aria-label="Search">
             <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
         </button>
     </div>
@@ -37,27 +37,27 @@
         <div class="menu-panel">
             <button class="menu-close" id="menu-close">&times;</button>
             <div class="menu-content" id="menu-content">
-                <div class="menu-item" data-section="om">Über Michael Morin Nissen</div>
-                <div class="menu-item" data-section="tre-info">Über TRE</div>
-                <div class="menu-item" data-section="sclerose-info">TRE & Multiple Sklerose</div>
-                <div class="menu-item" data-section="tre-uddannelse">TRE Ausbildung</div>
-                <div class="menu-item" data-section="privatlivspolitik">Datenschutz</div>
-                <div class="menu-item" data-section="kontakt">Kontakt</div>
-                <div class="menu-item" id="reset-onboarding" style="margin-top: 20px; border-top: 1px solid #e2e8f0; padding-top: 15px; font-size: 0.9rem; color: #6c82a9;">Onboarding erneut anzeigen</div>
+                <div class="menu-item" data-section="om">About Michael Morin Nissen</div>
+                <div class="menu-item" data-section="tre-info">About TRE</div>
+                <div class="menu-item" data-section="sclerose-info">TRE & Multiple Sclerosis</div>
+                <div class="menu-item" data-section="tre-uddannelse">TRE Training</div>
+                <div class="menu-item" data-section="privatlivspolitik">Privacy Policy</div>
+                <div class="menu-item" data-section="kontakt">Contact</div>
+                <div class="menu-item" id="reset-onboarding" style="margin-top: 20px; border-top: 1px solid #e2e8f0; padding-top: 15px; font-size: 0.9rem; color: #6c82a9;">Show onboarding again</div>
             </div>
             <div class="menu-detail" id="menu-detail" style="display:none;">
-                <button class="menu-back" id="menu-back">&larr; Zurück</button>
+                <button class="menu-back" id="menu-back">&larr; Back</button>
                 <div id="menu-detail-content"></div>
             </div>
         </div>
     </div>
 
-    <!-- Such-Overlay -->
+    <!-- Search overlay -->
     <div class="search-overlay" id="search-overlay">
         <div class="search-panel">
             <div class="search-header">
                 <div class="search-input-wrap">
-                    <input type="text" id="search-input" placeholder="In allen Inhalten suchen..." autocomplete="off">
+                    <input type="text" id="search-input" placeholder="Search all content..." autocomplete="off">
                     <button class="search-clear" id="search-clear" style="display:none;">&times;</button>
                 </div>
                 <button class="search-close" id="search-close">&times;</button>
@@ -68,16 +68,16 @@
 
     <div class="container">
         <header>
-            <h1>TRE - Dynamisches Verständnismodell</h1>
-            <p class="subtitle">Klicken Sie auf die Kreise zum Erkunden</p>
+            <h1>TRE - Dynamic Understanding Model</h1>
+            <p class="subtitle">Click on the circles to explore</p>
         </header>
 
         <div class="mode-selector">
-            <button class="mode-btn active" data-mode="klient">Für Klienten</button>
+            <button class="mode-btn active" data-mode="klient">For Clients</button>
             <button class="mode-btn" data-mode="fusion">Body Fusion Work</button>
-            <button class="mode-btn" data-mode="videnskab">Wissenschaftlich</button>
-            <button class="mode-btn" data-mode="sclerose">Für Menschen mit MS</button>
-            <button class="mode-btn" data-mode="oevelser">Übungen</button>
+            <button class="mode-btn" data-mode="videnskab">Scientific</button>
+            <button class="mode-btn" data-mode="sclerose">For People with MS</button>
+            <button class="mode-btn" data-mode="oevelser">Exercises</button>
         </div>
 
         <div class="main-content">
@@ -87,33 +87,33 @@
                     <g id="connections">
                         <!-- Center to outer -->
                         <line class="connection" data-from="tre" data-to="polyvagal" x1="350" y1="350" x2="350" y2="100"/>
-                        <line class="connection" data-from="tre" data-to="narrative" x1="350" y1="350" x2="580" y2="200"/>
-                        <line class="connection" data-from="tre" data-to="enactivisme" x1="350" y1="350" x2="580" y2="500"/>
-                        <line class="connection" data-from="tre" data-to="levine" x1="350" y1="350" x2="350" y2="600"/>
-                        <line class="connection" data-from="tre" data-to="reich" x1="350" y1="350" x2="120" y2="500"/>
+                        <line class="connection" data-from="tre" data-to="kropspsykoterapi" x1="350" y1="350" x2="580" y2="200"/>
+                        <line class="connection" data-from="tre" data-to="trauma" x1="350" y1="350" x2="580" y2="500"/>
+                        <line class="connection" data-from="tre" data-to="kronisksygdom" x1="350" y1="350" x2="350" y2="600"/>
+                        <line class="connection" data-from="tre" data-to="bioenergetik" x1="350" y1="350" x2="120" y2="500"/>
                         <line class="connection" data-from="tre" data-to="psykologi" x1="350" y1="350" x2="120" y2="200"/>
 
                         <!-- Outer to outer - ring connections -->
-                        <line class="connection" data-from="polyvagal" data-to="narrative" x1="350" y1="100" x2="580" y2="200"/>
-                        <line class="connection" data-from="narrative" data-to="enactivisme" x1="580" y1="200" x2="580" y2="500"/>
-                        <line class="connection" data-from="enactivisme" data-to="levine" x1="580" y1="500" x2="350" y2="600"/>
-                        <line class="connection" data-from="levine" data-to="reich" x1="350" y1="600" x2="120" y2="500"/>
-                        <line class="connection" data-from="reich" data-to="psykologi" x1="120" y1="500" x2="120" y2="200"/>
+                        <line class="connection" data-from="polyvagal" data-to="kropspsykoterapi" x1="350" y1="100" x2="580" y2="200"/>
+                        <line class="connection" data-from="kropspsykoterapi" data-to="trauma" x1="580" y1="200" x2="580" y2="500"/>
+                        <line class="connection" data-from="trauma" data-to="kronisksygdom" x1="580" y1="500" x2="350" y2="600"/>
+                        <line class="connection" data-from="kronisksygdom" data-to="bioenergetik" x1="350" y1="600" x2="120" y2="500"/>
+                        <line class="connection" data-from="bioenergetik" data-to="psykologi" x1="120" y1="500" x2="120" y2="200"/>
                         <line class="connection" data-from="psykologi" data-to="polyvagal" x1="120" y1="200" x2="350" y2="100"/>
 
                         <!-- Additional cross-connections -->
-                        <line class="connection" data-from="polyvagal" data-to="enactivisme" x1="350" y1="100" x2="580" y2="500"/>
+                        <line class="connection" data-from="polyvagal" data-to="trauma" x1="350" y1="100" x2="580" y2="500"/>
 
-                        <line class="connection" data-from="polyvagal" data-to="reich" x1="350" y1="100" x2="120" y2="500"/>
+                        <line class="connection" data-from="polyvagal" data-to="bioenergetik" x1="350" y1="100" x2="120" y2="500"/>
 
-                        <line class="connection" data-from="narrative" data-to="levine" x1="580" y1="200" x2="350" y2="600"/>
+                        <line class="connection" data-from="kropspsykoterapi" data-to="kronisksygdom" x1="580" y1="200" x2="350" y2="600"/>
 
-                        <line class="connection" data-from="narrative" data-to="psykologi" x1="580" y1="200" x2="120" y2="200"/>
+                        <line class="connection" data-from="kropspsykoterapi" data-to="psykologi" x1="580" y1="200" x2="120" y2="200"/>
 
-                        <line class="connection" data-from="enactivisme" data-to="reich" x1="580" y1="500" x2="120" y2="500"/>
+                        <line class="connection" data-from="trauma" data-to="bioenergetik" x1="580" y1="500" x2="120" y2="500"/>
 
 
-                        <line class="connection" data-from="levine" data-to="psykologi" x1="350" y1="600" x2="120" y2="200"/>
+                        <line class="connection" data-from="kronisksygdom" data-to="psykologi" x1="350" y1="600" x2="120" y2="200"/>
                     </g>
 
                     <!-- Circles -->
@@ -124,41 +124,40 @@
 
                         <!-- Outer circles -->
                         <circle class="circle outer-circle" data-id="polyvagal" cx="350" cy="100" r="75"/>
-                        <text class="circle-text" x="350" y="95">Polyvagale</text>
-                        <text class="circle-text" x="350" y="113">Theorie</text>
+                        <text class="circle-text" x="350" y="95">Polyvagal</text>
+                        <text class="circle-text" x="350" y="113">Theory</text>
 
-                        <circle class="circle outer-circle" data-id="narrative" cx="580" cy="200" r="75"/>
-                        <text class="circle-text" x="580" y="195">Körperorientierte</text>
-                        <text class="circle-text" x="580" y="213">Psychotherapie</text>
+                        <circle class="circle outer-circle" data-id="kropspsykoterapi" cx="580" cy="200" r="75"/>
+                        <text class="circle-text" x="580" y="195">Body-Oriented</text>
+                        <text class="circle-text" x="580" y="213">Psychotherapy</text>
 
-                        <circle class="circle outer-circle" data-id="enactivisme" cx="580" cy="500" r="75"/>
-                        <text class="circle-text" x="580" y="495">Trauma &</text>
+                        <circle class="circle outer-circle" data-id="trauma" cx="580" cy="500" r="75"/>
+                        <text class="circle-text" x="580" y="495">Trauma &amp;</text>
                         <text class="circle-text" x="580" y="513">Stress</text>
 
-                        <circle class="circle outer-circle" data-id="levine" cx="350" cy="600" r="75"/>
+                        <circle class="circle outer-circle" data-id="kronisksygdom" cx="350" cy="600" r="75"/>
                         <text class="circle-text" x="350" y="576">MS &amp;</text>
-                        <text class="circle-text" x="350" y="594">Chronische</text>
-                        <text class="circle-text" x="350" y="612">Krank-</text>
-                        <text class="circle-text" x="350" y="630">heiten</text>
+                        <text class="circle-text" x="350" y="594">Chronic</text>
+                        <text class="circle-text" x="350" y="612">Illness</text>
 
-                        <circle class="circle outer-circle" data-id="reich" cx="120" cy="500" r="75"/>
-                        <text class="circle-text" x="120" y="505">Bioenergetik</text>
+                        <circle class="circle outer-circle" data-id="bioenergetik" cx="120" cy="500" r="75"/>
+                        <text class="circle-text" x="120" y="505">Bioenergetics</text>
 
                         <circle class="circle outer-circle" data-id="psykologi" cx="120" cy="200" r="75"/>
-                        <text class="circle-text" x="120" y="195">Klinische</text>
-                        <text class="circle-text" x="120" y="213">Psychologie</text>
+                        <text class="circle-text" x="120" y="195">Clinical</text>
+                        <text class="circle-text" x="120" y="213">Psychology</text>
                     </g>
                 </svg>
             </div>
 
             <div class="info-panel" id="info-panel">
                 <div id="info-content">
-                    <h2>Willkommen zum TRE Verständnismodell</h2>
-                    <p>Dieses interaktive Modell zeigt, wie TRE durch sechs verschiedene Perspektiven wirkt, die sich alle gegenseitig beeinflussen.</p>
-                    <p><strong>So nutzen Sie das Modell:</strong></p>
+                    <h2>Welcome to the TRE Understanding Model</h2>
+                    <p>This interactive model shows how TRE works through six different perspectives, all of which inform each other.</p>
+                    <p><strong>How to use the model:</strong></p>
                     <ul>
-                        <li>Klicken Sie auf die Kreise, um mehr über jede Perspektive zu erfahren</li>
-                        <li>Wechseln Sie zwischen den fünf Perspektiven mit den Schaltflächen oben</li>
+                        <li>Click on the circles to learn about each perspective</li>
+                        <li>Switch between the five perspectives using the buttons above</li>
                     </ul>
                 </div>
             </div>
