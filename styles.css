@@ -148,27 +148,71 @@ h1 {
     border-top: 2px solid #e2e8f0;
 }
 
-.connection-item {
-    font-family: 'Times New Roman', Times, serif;
-    padding: 12px;
-    margin-bottom: 10px;
-    background: #f7fafc;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.2s ease;
+.connection-accordion {
+    margin-bottom: 8px;
     border-left: 3px solid #6c82a9;
+    border-radius: 6px;
+    background: #f7fafc;
+    overflow: hidden;
 }
 
-.connection-item:hover {
+.connection-accordion-header {
+    font-family: 'Times New Roman', Times, serif;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.connection-accordion-header:hover {
     background: #edf2f7;
-    transform: translateX(3px);
 }
 
-.connection-item-title {
+.connection-accordion-chevron {
+    font-size: 0.75rem;
+    color: #6c82a9;
+    transition: transform 0.25s ease;
+    flex-shrink: 0;
+}
+
+.connection-accordion.open .connection-accordion-chevron {
+    transform: rotate(90deg);
+}
+
+.connection-accordion-title {
     font-family: 'Times New Roman', Times, serif;
     font-weight: bold;
     color: #6c82a9;
-    margin-bottom: 5px;
+    font-size: 1.05rem;
+}
+
+.connection-accordion-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+}
+
+.connection-accordion.open .connection-accordion-body {
+    max-height: 2000px;
+}
+
+.connection-accordion-body-inner {
+    padding: 0 16px 16px;
+}
+
+.connection-accordion-body-inner p {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: #4a5568;
+    margin-bottom: 12px;
+}
+
+.connection-accordion-body-inner p:last-child {
+    margin-bottom: 0;
 }
 
 /* SVG Styles */
@@ -177,13 +221,8 @@ h1 {
     stroke-width: 2;
     fill: none;
     stroke-dasharray: 5, 5;
-    cursor: pointer;
+    pointer-events: none;
     transition: all 0.3s ease;
-}
-
-.connection:hover {
-    stroke: #6c82a9;
-    stroke-width: 3;
 }
 
 .connection.active {

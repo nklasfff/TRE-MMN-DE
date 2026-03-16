@@ -427,7 +427,7 @@ function setupOnboarding() {
 document.addEventListener('DOMContentLoaded', () => {
     setupModeButtons();
     setupCircleClicks();
-    setupConnectionClicks();
+
     setupMenu();
     setupSearch();
     setupOnboarding();
@@ -548,7 +548,7 @@ const deepDiveTexts = {
     `,
     fusion: `
         <h3>A physically demanding practice with deep roots</h3>
-        <p>Body Fusion Work is Michael Morin Nissen's unique group practice, developed through over 25 years of experience as a licensed psychologist, certified TRE Trainer (under David Berceli 2009-2013), and bioenergetic psychotherapist trained at the Norddeutsches Institut fur Bioenergetische Analyse. The method blends bioenergetics (Alexander Lowen), TRE (David Berceli), and elements from yoga, tai chi, and qi gong into an integrated, physically demanding practice. The class is more physically demanding than regular TRE, as it involves intensive work on strengthening the body's structure. The underlying idea is profound: for many of us, releasing emotions and energy can be problematic if the body does not have the structural capacity to contain what is released.</p>
+        <p>Body Fusion Work is Michael Morin Nissen's unique group practice, developed through over 25 years of experience as a licensed psychologist, certified TRE Trainer (under David Berceli 2009-2013), and bioenergetic psychotherapist trained at the Norddeutsches Institut für Bioenergetische Analyse. The method blends bioenergetics (Alexander Lowen), TRE (David Berceli), and elements from yoga, tai chi, and qi gong into an integrated, physically demanding practice. The class is more physically demanding than regular TRE, as it involves intensive work on strengthening the body's structure. The underlying idea is profound: for many of us, releasing emotions and energy can be problematic if the body does not have the structural capacity to contain what is released.</p>
 
         <h3>The five pillars of Body Fusion Work</h3>
         <p>Body Fusion Work rests on five integrated pillars. From bioenergetics (Lowen) come grounding exercises, breathwork, and the understanding of the body's energetic blocks and tension patterns — what Lowen called 'character armor'. From TRE (Berceli) comes the neurogenic tremor that releases deep-seated muscle tension through systematic fatiguing of the psoas and deep hip muscles. Yoga contributes flexibility, balance, and body awareness. Tai chi adds slow, meditative movement that strengthens energy flow and proprioceptive awareness. Qi gong brings breath-based energy work and inner calm. Together, these five traditions create a holistic practice that is more than the sum of its parts.</p>
@@ -689,9 +689,22 @@ function showCircleView(circleId, doScroll = true) {
                 <p><strong>See how ${circleNames[circleId]} connects with:</strong></p>
                 ${connectedCircles.map(targetId => {
                     const targetName = circleNames[targetId];
+                    const key1 = `${circleId}-${targetId}`;
+                    const key2 = `${targetId}-${circleId}`;
+                    const connectionData = content.connections[key1] || content.connections[key2];
+                    const connText = connectionData ? connectionData[currentMode] : '';
+                    const connId = `accordion-${circleId}-${targetId}`;
                     return `
-                        <div class="connection-item" onclick="showConnectionView('${circleId}', '${targetId}', '${circleId}')">
-                            <div class="connection-item-title">\u2192 ${targetName}</div>
+                        <div class="connection-accordion" id="${connId}" data-from="${circleId}" data-to="${targetId}">
+                            <div class="connection-accordion-header" onclick="toggleAccordion('${connId}')">
+                                <span class="connection-accordion-chevron">&#9654;</span>
+                                <span class="connection-accordion-title">${circleNames[circleId]} \u2194 ${targetName}</span>
+                            </div>
+                            <div class="connection-accordion-body">
+                                <div class="connection-accordion-body-inner">
+                                    ${formatText(connText)}
+                                </div>
+                            </div>
                         </div>
                     `;
                 }).join('')}
@@ -711,68 +724,76 @@ function showCircleView(circleId, doScroll = true) {
         ${connectionsHTML}
     `;
 
+    // Auto-expand pending accordion (from search results)
+    if (pendingAccordion && pendingAccordion.targetCircle === circleId) {
+        const pa = pendingAccordion;
+        pendingAccordion = null;
+        const accordionId = `accordion-${pa.targetCircle}-${pa.otherCircle}`;
+        const accordion = document.getElementById(accordionId);
+        if (accordion) {
+            accordion.classList.add('open');
+            // Scroll to accordion
+            setTimeout(() => {
+                accordion.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+            return;
+        }
+    } else {
+        pendingAccordion = null;
+    }
+
     if (doScroll) {
         scrollToElement('info-panel');
     }
 }
 
-// Connection view
+// Pending accordion to auto-expand (set by showConnectionView, consumed by showCircleView)
+let pendingAccordion = null;
+
+// Connection view (used by search results) - redirects to circle view with accordion auto-expanded
 function showConnectionView(from, to, fromCircle, doScroll = true) {
-    currentView = 'connection';
-    currentConnection = { from, to, fromCircle };
-    clearAllActive();
+    // Determine which circle to show (prefer non-TRE circle)
+    const targetCircle = fromCircle || (from === 'tre' ? to : from);
+    const otherCircle = from === targetCircle ? to : from;
 
-    // Activate the two circles and the line (but not the TRE circle)
-    if (from !== 'tre') {
-        const circle1 = document.querySelector(`[data-id="${from}"]`);
-        if (circle1) circle1.classList.add('active');
-    }
-    if (to !== 'tre') {
-        const circle2 = document.querySelector(`[data-id="${to}"]`);
-        if (circle2) circle2.classList.add('active');
-    }
+    // Set pending accordion so showCircleView will auto-expand it after rendering
+    pendingAccordion = { targetCircle, otherCircle, from, to };
 
-    // Find and activate the line
-    let line = document.querySelector(`[data-from="${from}"][data-to="${to}"]`);
-    if (!line) {
-        line = document.querySelector(`[data-from="${to}"][data-to="${from}"]`);
-    }
+    // Show the circle view (it will pick up pendingAccordion)
+    showCircleView(targetCircle, false);
+}
+
+// Toggle accordion open/closed
+function toggleAccordion(id) {
+    const accordion = document.getElementById(id);
+    if (!accordion) return;
+
+    const wasOpen = accordion.classList.contains('open');
+    accordion.classList.toggle('open');
+
+    // Highlight/unhighlight the SVG connection line
+    const from = accordion.dataset.from;
+    const to = accordion.dataset.to;
+    let line = document.querySelector(`.connection[data-from="${from}"][data-to="${to}"]`);
+    if (!line) line = document.querySelector(`.connection[data-from="${to}"][data-to="${from}"]`);
+    // Also check with TRE as from
+    if (!line) line = document.querySelector(`.connection[data-from="tre"][data-to="${to}"]`);
+    if (!line) line = document.querySelector(`.connection[data-from="${to}"][data-to="tre"]`);
+    if (!line) line = document.querySelector(`.connection[data-from="tre"][data-to="${from}"]`);
+
     if (line) {
-        line.classList.add('active');
+        if (wasOpen) {
+            line.classList.remove('active');
+        } else {
+            line.classList.add('active');
+        }
     }
 
-    // Show connection info
-    const key1 = `${from}-${to}`;
-    const key2 = `${to}-${from}`;
-    const connectionData = content.connections[key1] || content.connections[key2];
-
-    if (!connectionData) {
-        document.getElementById('info-content').innerHTML = `
-            <div style="margin-bottom: 20px;">
-                <button onclick="showCircleView('${fromCircle}')" style="background: none; border: none; color: #6c82a9; font-size: 1rem; cursor: pointer; font-family: 'Times New Roman', Times, serif;">\u2190 Back to ${circleNames[fromCircle]}</button>
-            </div>
-            <h2>Connection not found</h2>
-        `;
-        return;
-    }
-
-    const text = connectionData[currentMode];
-    const fromName = circleNames[from];
-    const toName = circleNames[to];
-
-    const birdImgConn = currentMode === 'oevelser' ? '<img src="tre_fugl.png" alt="TRE bird" style="width: 100%; max-width: 200px; display: block; margin: 0 auto 20px;">' : '';
-
-    document.getElementById('info-content').innerHTML = `
-        <div style="margin-bottom: 20px; text-align: center;">
-            <button onclick="showCircleView('${fromCircle}')" style="background: none; border: none; color: #6c82a9; font-size: 1rem; cursor: pointer; font-family: 'Times New Roman', Times, serif;">\u2190 Back to ${circleNames[fromCircle]}</button>
-        </div>
-        ${birdImgConn}
-        <h2>Dynamic: ${fromName} \u2194 ${toName}</h2>
-        ${formatText(text)}
-    `;
-
-    if (doScroll) {
-        scrollToElement('info-panel');
+    // Scroll to accordion when opening
+    if (!wasOpen) {
+        setTimeout(() => {
+            accordion.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 50);
     }
 }
 
@@ -807,6 +828,7 @@ window.showWelcome = showWelcome;
 window.showCircleView = showCircleView;
 window.showConnectionView = showConnectionView;
 window.toggleDeepDive = toggleDeepDive;
+window.toggleAccordion = toggleAccordion;
 window.scrollToDiagram = scrollToDiagram;
 
 // Find connected circles
@@ -820,20 +842,6 @@ function getConnectedCircles(circleId) {
     });
 }
 
-// Connection clicks (from SVG)
-function setupConnectionClicks() {
-    const connections = document.querySelectorAll('.connection');
-    connections.forEach(line => {
-        line.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const from = line.dataset.from;
-            const to = line.dataset.to;
-            // If from TRE, show target circle first
-            const fromCircle = from === 'tre' ? to : from;
-            showConnectionView(from, to, fromCircle);
-        });
-    });
-}
 
 // Clear all active - TRE remains GRAY
 function clearAllActive() {
@@ -848,7 +856,7 @@ const menuSections = {
         html: `
             <h2>Michael Morin Nissen</h2>
             <p><strong>Licensed psychologist (authorization no. 201134), certified bioenergetic psychotherapist and TRE Trainer</strong></p>
-            <p>Michael Morin Nissen holds a master's degree in psychology from the University of Copenhagen and is a certified bioenergetic psychotherapist from the Norddeutsches Institut fur Bioenergetische Analyse in Germany. He is a TRE Trainer, trained 2009-2013 under Dr. David Berceli in Germany, Denmark, and Poland.</p>
+            <p>Michael Morin Nissen holds a master's degree in psychology from the University of Copenhagen and is a certified bioenergetic psychotherapist from the Norddeutsches Institut für Bioenergetische Analyse in Germany. He is a TRE Trainer, trained 2009-2013 under Dr. David Berceli in Germany, Denmark, and Poland.</p>
             <p>From 2007 to 2020, Michael worked as a psychologist at the Danish MS Society, where he provided therapy, group programs, workshops, and TRE research. He has facilitated TRE for over 1,000 people with multiple sclerosis and has contributed to two scientific studies on TRE and MS.</p>
             <p>Michael currently runs a private practice in Frederiksberg, where he offers individual therapy, group therapy, and TRE sessions. He teaches TRE internationally in Scandinavia, Germany, England, South Africa, Israel, and Australia, among other places.</p>
             <p>His approach integrates bioenergetic analysis, Somatic Experiencing, TRE, neuro-affective psychotherapy, and Reichian methods into a cohesive body- and trauma-oriented practice.</p>
