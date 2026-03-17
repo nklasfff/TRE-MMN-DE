@@ -215,6 +215,39 @@ h1 {
     margin-bottom: 0;
 }
 
+/* Share button */
+.share-btn {
+    font-family: 'Times New Roman', Times, serif;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 6px;
+    color: #6c82a9;
+    font-size: 0.9rem;
+    padding: 8px 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.share-btn:hover {
+    border-color: #6c82a9;
+    background: rgba(108, 130, 169, 0.05);
+}
+
+.share-btn.copied {
+    border-color: #68d391;
+    color: #38a169;
+}
+
+.share-btn svg {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+}
+
 /* SVG Styles */
 .connection {
     stroke: #cbd5e0;
