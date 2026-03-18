@@ -73,7 +73,7 @@ h1 {
 
 .main-content {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 30px;
     margin-bottom: 30px;
 }
@@ -673,10 +673,6 @@ h1 {
 
 /* Responsive */
 @media (max-width: 1024px) {
-    .main-content {
-        grid-template-columns: 1fr;
-    }
-
     h1 {
         font-size: 2rem;
     }
@@ -795,4 +791,62 @@ h1 {
 @keyframes pulseHint {
     0%, 100% { r: 65; }
     50% { r: 70; }
+}
+
+/* Desktop app frame */
+@media (min-width: 768px) {
+    .container {
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .top-bar {
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    body::after {
+        content: '';
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        max-width: 700px;
+        margin: 0 auto;
+        border-left: 1.5px solid #6c82a9;
+        border-right: 1.5px solid #6c82a9;
+        pointer-events: none;
+        z-index: 150;
+    }
+
+    .menu-overlay {
+        max-width: 700px;
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .menu-panel {
+        left: calc(50% - 350px);
+    }
+
+    .search-overlay {
+        max-width: 700px;
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .onboarding-overlay {
+        max-width: 700px;
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
